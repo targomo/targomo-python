@@ -1,0 +1,17 @@
+from distutils.core import setup
+from setuptools import find_packages
+setup(
+  name = 'targomo_python',
+  packages = find_packages(),
+  version = '$VERSION',
+  description = 'A python client library to query the Targomo API',
+  author = 'Targomo GmbH',
+  author_email = 'mail@targomo.com',
+  url = 'https://github.com/targomo/targomo_python',
+  download_url = 'https://github.com/targomo/targomo_python/tarball/$VERSION',
+  install_requires=[
+     'requests',
+ ],
+  keywords = ['isochrone', 'routing', 'polygon', 'openstreetmaps', 'gtfs', 'map'],
+  classifiers = [],
+)
