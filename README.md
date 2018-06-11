@@ -136,7 +136,7 @@ not all capabilities are available for all plan levels. Refer to the different [
                    --outputDir=data/ \
                    --outputFilename=test.geojson \
                    --serviceKey='Your key here' \
-                   --serviceUrl=http://service.targomo.com/germany/ \
+                   --serviceUrl=http://api.targomo.com/germany/ \
                    --srid=4326 \
 
 
@@ -152,7 +152,7 @@ Example how to use the library from Python code:
     travelOptions = TravelOptions()
     travelOptions.setServiceKey('INSERT_YOUR_API_KEY_HERE')
     travelOptions.setTravelType(TravelType.TRANSIT)
-    travelOptions.setServiceUrl('https://service.targomo.com/westcentraleurope/')
+    travelOptions.setServiceUrl('https://api.targomo.com/westcentraleurope/')
     travelOptions.setTravelTime(10 * 3600)
     travelOptions.setFrameDuration(3 * 3600)
     travelOptions.addSource({"id": "source-1", "lng": 53.5532, "lat": 10.00644})
