@@ -136,7 +136,7 @@ not all capabilities are available for all plan levels. Refer to the different [
                    --outputDir=data/ \
                    --outputFilename=test.geojson \
                    --serviceKey='Your key here' \
-                   --serviceUrl=http://service.targomo.com/germany/ \
+                   --serviceUrl=http://api.targomo.com/germany/ \
                    --srid=4326 \
 
 
@@ -152,7 +152,7 @@ Example how to use the library from Python code:
     travelOptions = TravelOptions()
     travelOptions.setServiceKey('INSERT_YOUR_API_KEY_HERE')
     travelOptions.setTravelType(TravelType.TRANSIT)
-    travelOptions.setServiceUrl('https://service.targomo.com/westcentraleurope/')
+    travelOptions.setServiceUrl('https://api.targomo.com/westcentraleurope/')
     travelOptions.setTravelTime(10 * 3600)
     travelOptions.setFrameDuration(3 * 3600)
     travelOptions.addSource({"id": "source-1", "lng": 53.5532, "lat": 10.00644})
@@ -167,3 +167,47 @@ Example how to use the library from Python code:
 Using unit test and nose, API assumes Python 3.x
 - rename _tests/config.py.txt_ to _tests/config.py_, add appropriate API key
 - run `nosetests -v`
+
+## Deploying
+This project is deployed under [Python Package Index](https://pypi.org/project/targomo_python/) repository as a pip package. Python users are able to download and use Targomo client library by calling (according to pip version installed):
+
+```
+    pip install targomo_python
+    
+    or
+    
+    pip3 install targomo_python
+```
+
+To deploy the project on PyPI you should create a `.pypirc` file containing PyPI credentials and then run the `deploy.py` script located in project's root folder.
+
+### .pypirc file
+The .pypirc file content should be as described below:
+
+```
+[distutils]
+index-servers=
+    pypitest
+    pypi
+
+[pypi]
+repository = https://upload.pypi.org/legacy/
+username = [Targomo's PyPI username]
+password = [Targomo's PyPI password]
+
+[pypitest]
+repository = https://test.pypi.org/legacy/
+username = [Targomo's Test PyPI repository username]
+password = [Targomo's Test PyPI repository password]
+```
+
+### Running deploy.py
+Running deploy.py can be accomplished by calling:
+
+```
+    python3 deploy.py
+```
+
+This script when called creates new a git tag on this Github repository (incrementing the minor release number), packages the targomo_python contents and send to PyPI public repository.
+
+

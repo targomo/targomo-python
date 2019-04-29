@@ -1,5 +1,4 @@
 ### publish new version of this library to PyPI
-### Read more about publishing here: http://peterdowns.com/posts/first-time-with-pypi.html
 
 import git
 from shutil import copyfile
@@ -21,7 +20,6 @@ for line in fileinput.input("./setup.py", inplace=True):
 new_tag = repo.create_tag(str(nexttag), message='Automatic deployment of new version "{0}"'.format(nexttag))
 repo.remotes.origin.push(new_tag)
 
-os.system("python3 setup.py register -r pypitest")
-os.system("python3 setup.py sdist upload -r pypitest")
-os.system("python3 setup.py register -r pypi")
-os.system("python3 setup.py sdist upload -r pypi")
+os.system("python3 setup.py sdist")
+os.system("twine upload --repository pypitest dist/*")
+os.system("twine upload --repository pypi dist/*")
