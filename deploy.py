@@ -1,24 +1,20 @@
 ### publish new version of this library to PyPI
 
-import git
 from shutil import copyfile
 import fileinput
 import sys
 import os
+import argparse
 
+parser = argparse.ArgumentParser(description="Publish the Targomo python library to PyPi")
+parser.add_argument("--version", required=True, type=str, help="The version number", nargs="?")
+args = parser.parse_args()
 
 copyfile("./setup.py.default", "./setup.py")
 
-repo    = git.Repo(".")
-lasttag = sorted(repo.tags, key=lambda t: t.commit.committed_date)[-1]
-nexttag = "0." + str(int(str(lasttag).replace("0.", "")) + 1)
-
 for line in fileinput.input("./setup.py", inplace=True):
-    line = line.replace("$VERSION", str(nexttag))
+    line = line.replace("$VERSION", args.version)
     sys.stdout.write(line),
-
-new_tag = repo.create_tag(str(nexttag), message='Automatic deployment of new version "{0}"'.format(nexttag))
-repo.remotes.origin.push(new_tag)
 
 os.system("python3 setup.py sdist")
 os.system("twine upload --repository pypitest dist/*")
