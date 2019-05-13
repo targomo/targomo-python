@@ -1,0 +1,34 @@
+# Include Global Configurations
+include:
+  - project: 'api-server/gitlab-ci-scripts'
+    ref: v1.1
+    file: '.global-configuration.yml'
+
+image: code.route360.net:4567/docker/general-image/service/psql9.6:0.0.4
+
+stages:
+  - build
+  - deploy
+
+build:
+   stage: build
+   script:
+     - configure_sonar_scanner
+     - configure_python3_virtual_env
+     - python3 -m compileall -f targomo_python deploy.py setup.py
+     - sonarscanner -Dsonar.sources=targomo_python
+   only:
+     - /^feature.*$/
+     - /^release.*$/
+     - develop
+     - master
+
+deploy:
+   stage: deploy
+   script:
+     - configure_python3_virtual_env
+     - insert_pypirc
+     - echo $CI_COMMIT_TAG
+     - python3 deploy.py --version $CI_COMMIT_TAG
+   only:
+     - tags
